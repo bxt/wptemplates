@@ -69,4 +69,10 @@ module Wptemplates
     end
   end
   
+protected
+  
+  def self.symbolize string
+    string.strip.gsub(/ /,'_').downcase.to_sym
+  end
+
 end

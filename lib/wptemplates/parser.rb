@@ -78,7 +78,7 @@ module Wptemplates
     end
     
     def symbolize string
-      string.strip.gsub(/ /,'_').downcase.to_sym
+      Wptemplates.symbolize string
     end
     
   end
