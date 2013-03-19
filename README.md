@@ -38,6 +38,12 @@ these methods:
 
 ## Developing
 
+## Markup
+
+MediaWiki markup is not trivial to parse and there might always
+be compatibility issues. There's a useful help page about 
+[templates][tmplh] and a [markup spec][mspec].
+
 ### Known Issues
 
 * If you have link in your templates the pipes cause a new parameter
@@ -50,3 +56,6 @@ these methods:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+[tmplh]: http://en.wikipedia.org/wiki/Help:Template#Usage_syntax "English Wikipedia Template help page, syntax section"
+[mspec]: http://www.mediawiki.org/wiki/Markup_spec "MediaWiki Markup spec"
