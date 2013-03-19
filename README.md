@@ -44,7 +44,7 @@ these methods:
 
 ## Developing
 
-## Markup
+### Markup
 
 MediaWiki markup is not trivial to parse and there might always
 be compatibility issues. There's a useful help page about 
