@@ -2,6 +2,12 @@
 
 Gem for collecting template informations from mediawiki markup. 
 
+It will help you to extract useful machine-readable data from
+wikipedia articles, since there ist a lot of useful stuff
+encoded as templates.
+
+Currently only templates are parsed, all other markup is ignored.
+
 ## Installation
 
 Add this line to your application's Gemfile:
