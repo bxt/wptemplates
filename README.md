@@ -36,6 +36,13 @@ these methods:
     ast.all_templates_of(:foo).map{|t| t.params[:x].text} => ["3"]
 <!-- /EXAMPLES -->
 
+## Developing
+
+### Known Issues
+
+* If you have link in your templates the pipes cause a new parameter
+* nowiki, pre and math blocks are deleted
+
 ## Contributing
 
 1. Fork it
