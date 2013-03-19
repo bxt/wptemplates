@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["bxt@die-optimisten.net"]
   spec.description   = %q{Collect template informations from MediaWiki markup}
   spec.summary       = %q{Collect template informations from MediaWiki markup}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/bxt/wptemplates"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

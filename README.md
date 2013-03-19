@@ -6,15 +6,13 @@ Gem for collecting template informations from mediawiki markup.
 
 Add this line to your application's Gemfile:
 
-    gem 'wptemplates'
+    gem 'wptemplates', git: 'git://github.com/bxt/wptemplates.git'
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install wptemplates
+The gem is currently not in the rubygems.org repository. 
 
 ## Usage
 
