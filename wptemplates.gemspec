@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Wptemplates::VERSION
   spec.authors       = ["Bernhard Häussner"]
   spec.email         = ["bxt@die-optimisten.net"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Collect template informations from MediaWiki markup}
+  spec.summary       = %q{Collect template informations from MediaWiki markup}
   spec.homepage      = ""
   spec.license       = "MIT"
 

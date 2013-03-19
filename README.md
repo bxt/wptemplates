@@ -1,6 +1,6 @@
 # Wptemplates
 
-TODO: Write a gem description
+Gem for collecting template informations from mediawiki markup. 
 
 ## Installation
 
