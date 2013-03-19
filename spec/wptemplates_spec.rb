@@ -89,4 +89,12 @@ describe Wptemplates do
     expect(Wptemplates.parse("{{{{foo}}")[0].name).to eq(:"{{foo")
   end
   
+  it "finds nested templates" do
+    parsed = Wptemplates.parse("{{foo| a = {{bar|j|k}} |b = y {{foo|p=q}} y2 \n|c= z z }}")
+    expect(parsed.templates_of :foo).to eq([parsed.templates[0]])
+    expect(parsed.all_templates_of :foo).to eq([parsed.templates[0], parsed.templates[0].params[:b].templates[0]])
+    expect(parsed.templates_of :bar).to eq([])
+    expect(parsed.all_templates_of :bar).to eq([parsed.templates[0].params[:a].templates[0]])
+  end
+  
 end
