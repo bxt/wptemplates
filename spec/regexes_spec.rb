@@ -177,7 +177,30 @@ describe Wptemplates::Regexes do
   end
   
   describe '.a_doubleopenbrace' do
+    include ScanShortcutFor(:a_doubleopenbrace)
     
+    it 'consumes a doubleopenbrace' do
+      expect(scan "{{").to eq("{{")
+      expect(scan "{{a").to eq("{{")
+    end
+    it 'consumes only one doubleopenbrace even if there are others around (not greedy)' do
+      expect(scan "{{a{{").to eq("{{")
+     expect(scan "{{a{{a").to eq("{{")
+    end
+    it 'fails when there is stuff before the doubleopenbrace' do
+      expect(scan "a{{").to be_false
+      expect(scan "a{{b").to be_false
+    end
+    it 'ignores singleopenbrace' do
+      expect(scan "a{").to be_false
+      expect(scan "a{b").to be_false
+    end
+    it 'deals with extra braces' do
+      expect(scan "{{{").to eq("{{")
+      expect(scan "{{{{").to eq("{{")
+      expect(scan "{{{{{").to eq("{{")
+      expect(scan "{{{{{{").to eq("{{")
+     end
   end
   
   describe '.a_doubleclosingbrace' do
