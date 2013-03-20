@@ -159,7 +159,21 @@ describe Wptemplates::Regexes do
   end
   
   describe '.a_pipe' do
+    include ScanShortcutFor(:a_pipe)
     
+    it 'consumes a pipe' do
+      expect(scan "|").to eq("|")
+      expect(scan "|a").to eq("|")
+    end
+    it 'consumes only one pipe even if there are others around (not greedy)' do
+      expect(scan "|||").to eq("|")
+      expect(scan "|a|").to eq("|")
+      expect(scan "|a|a").to eq("|")
+    end
+    it 'fails when there is stuff before the pipe' do
+      expect(scan "a|").to be_false
+      expect(scan "a|b").to be_false
+    end
   end
   
   describe '.a_doubleopenbrace' do
