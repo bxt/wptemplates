@@ -1,7 +1,9 @@
 require 'strscan'
+require 'wptemplates/regexes'
 
 module Wptemplates
   class Parser
+    include Regexes
     
     def parse(text)
       @input = StringScanner.new(text)
@@ -21,9 +23,9 @@ module Wptemplates
     end
     
     def parse_template
-      if @input.scan(/{{/)
+      if @input.scan(a_doubleopenbrace)
         template = Template.new parse_template_name, parse_template_parameters
-        @input.scan(/}}/) or raise "unclosed template"
+        @input.scan(a_doubleclosingbrace) or raise "unclosed template"
         template
       else
         nil
@@ -32,14 +34,14 @@ module Wptemplates
     
     def parse_anything in_template_parameter = false
       if in_template_parameter
-        @input.scan(/([^{}|]|{(?!{)|}(?!}))+/) && Text.new(@input.matched)
+        @input.scan(till_doublebrace_or_pipe) && Text.new(@input.matched)
       else
-        @input.scan(/([^{]|{(?!{))+/) && Text.new(@input.matched)
+        @input.scan(till_doubleopenbrace) && Text.new(@input.matched)
       end
     end
     
     def parse_template_name
-      if @input.scan(/([^|}]|}(?!}))+/)
+      if @input.scan(till_doubleclosebrace_or_pipe)
         symbolize(@input.matched)
       else
         nil
@@ -56,7 +58,7 @@ module Wptemplates
     end
     
     def parsed_named_template_parameter(h)
-      if @input.scan(/\|(([^|=}]|}(?!}))+)=/)
+      if @input.scan(an_equals_no_doubleclosebrace_or_pipe)
         key = symbolize(@input[1])
         value = parse_main(true)
         value[ 0].text.lstrip!
@@ -68,7 +70,7 @@ module Wptemplates
     end
     
     def parse_numeric_template_parameter(h,i)
-      if @input.scan(/\|/)
+      if @input.scan(a_pipe)
         value = parse_main(true)
         h[i] = value
       else
