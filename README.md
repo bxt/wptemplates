@@ -49,7 +49,8 @@ these methods:
 MediaWiki markup is not trivial to parse and there might always
 be compatibility issues. There's a useful help page about 
 [templates][tmplh] and a [markup spec][mspec]. For links there
-is a page about [links][linkh] and about the [pipe trick][ptrkh]
+is a page about [links][linkh] and about the [pipe trick][ptrkh]. 
+Also, there is a page with [link's BNF][lnbnf]. 
 
 ### Known Issues
 
@@ -68,3 +69,4 @@ is a page about [links][linkh] and about the [pipe trick][ptrkh]
 [mspec]: http://www.mediawiki.org/wiki/Markup_spec "MediaWiki Markup spec"
 [linkh]: http://en.wikipedia.org/wiki/Help:Link "English Wikipedia Link help page"
 [ptrkh]: http://en.wikipedia.org/wiki/Help:Pipe_trick "English Wikipedia Pipe trick help page"
+[lnbnf]: http://www.mediawiki.org/wiki/Markup_spec/BNF/Links "MediaWiki Link BNF"
