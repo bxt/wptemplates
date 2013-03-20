@@ -58,7 +58,7 @@ module Wptemplates
     end
     
     def parsed_named_template_parameter(h)
-      if @input.scan(an_equals_no_doubleclosebrace_or_pipe)
+      if @input.scan(from_pipe_till_equals_no_doubleclosebrace_or_pipe)
         key = symbolize(@input[1])
         value = parse_main(true)
         value[ 0].text.lstrip!

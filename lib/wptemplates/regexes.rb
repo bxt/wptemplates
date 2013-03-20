@@ -14,7 +14,7 @@ module Wptemplates
       /([^|}]|}(?!}))+/
     end
     
-    def an_equals_no_doubleclosebrace_or_pipe
+    def from_pipe_till_equals_no_doubleclosebrace_or_pipe
       /\|(([^|=}]|}(?!}))*)=/
     end
     

@@ -98,8 +98,8 @@ describe Wptemplates::Regexes do
     end
   end
   
-  describe '.an_equals_no_doubleclosebrace_or_pipe' do
-    include ScanShortcutFor(:an_equals_no_doubleclosebrace_or_pipe)
+  describe '.from_pipe_till_equals_no_doubleclosebrace_or_pipe' do
+    include ScanShortcutFor(:from_pipe_till_equals_no_doubleclosebrace_or_pipe)
     
     context 'when there is an equals sign and a pipe' do
       it 'consumes a string including equals with no doubleclosebraces or pipes at all' do
