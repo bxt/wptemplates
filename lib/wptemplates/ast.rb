@@ -1,4 +1,3 @@
-
 module Wptemplates
   
   module Node

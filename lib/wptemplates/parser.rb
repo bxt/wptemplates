@@ -1,5 +1,4 @@
 require 'strscan'
-require "wptemplates/version"
 
 module Wptemplates
   class Parser

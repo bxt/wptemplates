@@ -1,4 +1,3 @@
-require 'strscan'
 require "wptemplates/version"
 require "wptemplates/ast"
 require "wptemplates/parser"
