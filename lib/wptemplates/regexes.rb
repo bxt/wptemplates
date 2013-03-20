@@ -1,5 +1,6 @@
 module Wptemplates
   module Regexes
+    module_function
     
     def till_doublebrace_or_pipe
       /([^{}|]|{(?!{)|}(?!}))+/
