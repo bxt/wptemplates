@@ -1,5 +1,4 @@
 require "wptemplates/version"
-require "wptemplates/ast"
 require "wptemplates/parser"
 
 module Wptemplates

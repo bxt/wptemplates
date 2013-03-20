@@ -1,6 +1,7 @@
 require 'strscan'
 require 'wptemplates/regexes'
 require 'wptemplates/utils'
+require 'wptemplates/ast'
 
 module Wptemplates
   class Parser
