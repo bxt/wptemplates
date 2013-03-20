@@ -3,11 +3,18 @@ module Wptemplates
     module_function
     
     def normalize_link string
-      string.tr('_',' ').strip.squeeze(' ').capitalize
+      normalized = string.clone
+      normalized.tr!('_',' ')
+      normalized.strip!
+      normalized.squeeze!(' ')
+      normalized[0] = normalized[0,1].upcase
+      normalized
     end
     
     def symbolize string
-      normalize_link(string).gsub(' ','_').downcase.to_sym
+      symbolized = normalize_link(string)
+      symbolized.tr!(' ','_')
+      symbolized.downcase.to_sym
     end
     
   end
