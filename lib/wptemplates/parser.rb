@@ -18,6 +18,8 @@ module Wptemplates
       while unit = parse_template || parse_anything(in_template_parameter)
         output << unit
       end
+      
+      output << Text.new("") if output.empty?
 
       output
     end
