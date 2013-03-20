@@ -162,17 +162,4 @@ describe Wptemplates do
     expect(parsed.all_templates_of :bar).to eq([parsed.templates[0].params[:a].templates[0]])
   end
   
-  it "symbolized strings" do
-    expect(Wptemplates.symbolize(" foo ")).to eq(:foo)
-    expect(Wptemplates.symbolize("_foo_")).to eq(:_foo_)
-    expect(Wptemplates.symbolize("foo")).to eq(:foo)
-    expect(Wptemplates.symbolize("FOO")).to eq(:foo)
-    expect(Wptemplates.symbolize("FoO")).to eq(:foo)
-    expect(Wptemplates.symbolize("foo bar")).to eq(:foo_bar)
-    expect(Wptemplates.symbolize("Foo BAR")).to eq(:foo_bar)
-    expect(Wptemplates.symbolize("foo_bar")).to eq(:foo_bar)
-    expect(Wptemplates.symbolize("foo__bar")).to eq(:foo__bar)
-    expect(Wptemplates.symbolize("fooBar")).to eq(:foobar)
-  end
-  
 end

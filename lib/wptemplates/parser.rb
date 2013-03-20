@@ -1,9 +1,11 @@
 require 'strscan'
 require 'wptemplates/regexes'
+require 'wptemplates/utils'
 
 module Wptemplates
   class Parser
     include Regexes
+    include Utils
     
     def parse(text)
       @input = StringScanner.new(text)
@@ -78,10 +80,6 @@ module Wptemplates
       else
         nil
       end
-    end
-    
-    def symbolize string
-      Wptemplates.symbolize string
     end
     
   end
