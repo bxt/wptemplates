@@ -62,7 +62,33 @@ describe Wptemplates::Regexes do
   end
   
   describe '.till_doubleclosebrace_or_pipe' do
+    include ScanShortcutFor(:till_doubleclosebrace_or_pipe)
     
+    it 'consumes a string with no doubleclosebraces or pipes at all' do
+      expect(scan "abc").to eq("abc")
+      expect(scan "ab{{c").to eq("ab{{c")
+    end
+    it 'consumes until doubleclosebraces' do
+      expect(scan "abc}}d").to eq("abc")
+      expect(scan "a{{bc}}d").to eq("a{{bc")
+    end
+    it 'consumes until a pipe' do
+      expect(scan "abc|d").to eq("abc")
+      expect(scan "a{{bc|d").to eq("a{{bc")
+    end
+    it 'does not accept an empty string (epsilon transition)' do
+      expect(scan "}}d").to be_false
+      expect(scan "|d").to be_false
+    end
+    it 'consumes until doubleclosebracees even if other doubleclosebrace show up (not greedy)' do
+      expect(scan "ab}}d}}e").to eq("ab")
+    end
+    it 'consumes until a pipe even if other pipes show up (not greedy)' do
+      expect(scan "ab|d|e").to eq("ab")
+    end
+    it 'ignores lone braces' do
+      expect(scan "ab}c}}e").to eq("ab}c")
+    end
   end
   
   describe '.an_equals_no_doubleclosebrace_or_pipe' do
