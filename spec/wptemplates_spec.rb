@@ -10,6 +10,14 @@ describe Wptemplates do
     expect(parsed.templates).to eq([])
   end
   
+  it "parses the empty string into a soup with a single empty text node" do
+    parsed = Wptemplates.parse("")
+    expect(parsed.length).to eq(1)
+    expect(parsed.text).to eq("")
+    expect(parsed[0].text).to eq("")
+    expect(parsed.templates).to eq([])
+  end
+  
   it "parses a template without any parameters" do
     parsed = Wptemplates.parse("{{foo}}")
     expect(parsed.length).to eq(1)
@@ -55,6 +63,58 @@ describe Wptemplates do
     expect(parsed[0].params[:c].length).to eq(1)
     expect(parsed[0].params[:c].text).to eq("z z")
     expect(parsed[0].params[:c][0].text).to eq("z z")
+  end
+  
+  it "doesn't have problems with empty numeric parameters" do
+    parsed = Wptemplates.parse("{{foo|}}")
+    expect(parsed.length).to eq(1)
+    expect(parsed[0].params.keys).to eq([0])
+    expect(parsed[0].params[0].length).to eq(1)
+    expect(parsed[0].params[0].text).to eq("")
+    expect(parsed[0].params[0][0].text).to eq("")
+  end
+  
+  it "doesn't have problems with empty valued named parameters" do
+    parsed = Wptemplates.parse("{{foo|b=}}")
+    expect(parsed.length).to eq(1)
+    expect(parsed[0].params.keys).to eq([:b])
+    expect(parsed[0].params[:b].length).to eq(1)
+    expect(parsed[0].params[:b].text).to eq("")
+    expect(parsed[0].params[:b][0].text).to eq("")
+  end
+  
+  it "doesn't have problems with white spece only valued named parameters" do
+    parsed = Wptemplates.parse("{{foo|c= }}")
+    expect(parsed.length).to eq(1)
+    expect(parsed[0].params.keys).to eq([:c])
+    expect(parsed[0].params[:c].length).to eq(1)
+    expect(parsed[0].params[:c].text).to eq("")
+    expect(parsed[0].params[:c][0].text).to eq("")
+  end
+  
+  it "doesn't have problems with empty name parameters" do
+    parsed = Wptemplates.parse("{{foo|=3}}")
+    expect(parsed[0].params[:""].length).to eq(1)
+    expect(parsed[0].params[:""].text).to eq("3")
+    expect(parsed[0].params[:""][0].text).to eq("3")
+  end
+  
+  it "doesn't have problems with mixed empty stuff" do
+    parsed = Wptemplates.parse("{{foo||b=|c= |=3}}")
+    expect(parsed.length).to eq(1)
+    expect(parsed[0].params.keys).to eq([0,:b,:c,:""])
+    expect(parsed[0].params[0].length).to eq(1)
+    expect(parsed[0].params[0].text).to eq("")
+    expect(parsed[0].params[0][0].text).to eq("")
+    expect(parsed[0].params[:b].length).to eq(1)
+    expect(parsed[0].params[:b].text).to eq("")
+    expect(parsed[0].params[:b][0].text).to eq("")
+    expect(parsed[0].params[:c].length).to eq(1)
+    expect(parsed[0].params[:c].text).to eq("")
+    expect(parsed[0].params[:c][0].text).to eq("")
+    expect(parsed[0].params[:""].length).to eq(1)
+    expect(parsed[0].params[:""].text).to eq("3")
+    expect(parsed[0].params[:""][0].text).to eq("3")
   end
   
   it "parses nested templates" do
