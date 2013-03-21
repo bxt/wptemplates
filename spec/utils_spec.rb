@@ -3,23 +3,33 @@ require 'spec_helper'
 describe Wptemplates::Utils do
   
   describe '.normalize_link' do
-    it 'removes spare spaces and underscores ' do
-      expect(subject.normalize_link(" Jimbo_ __ Wales__")).to eq("Jimbo Wales")
-    end
-    it 'removes spare spaces and underscores around namespace nekudotayim' do
-      pending "not sure if to implement here" do
-        expect(subject.normalize_link("_User_: Jimbo_ __ Wales__")).to eq("User:Jimbo Wales")
+    context 'when anchor is false' do
+      it 'removes spare spaces and underscores ' do
+        expect(subject.normalize_link(" Jimbo_ __ Wales__")).to eq("Jimbo Wales")
+      end
+      it 'removes spare spaces and underscores around namespace nekudotayim' do
+        pending "not sure if to implement here" do
+          expect(subject.normalize_link("_User_: Jimbo_ __ Wales__")).to eq("User:Jimbo Wales")
+        end
+      end
+      it 'capitalizes the first letter' do
+        expect(subject.normalize_link("foo")).to eq("Foo")
+      end
+      it 'preserves case of the other letters' do
+        expect(subject.normalize_link("fOo")).to eq("FOo")
+      end
+      it 'normalizes case of namespace prefix' do
+        pending "not sure if to implement here" do
+          expect(subject.normalize_link("fOoO:Bar")).to eq("Fooo:Bar")
+        end
       end
     end
-    it 'capitalizes the first letter' do
-      expect(subject.normalize_link("foo")).to eq("Foo")
-    end
-    it 'preserves case of the other letters' do
-      expect(subject.normalize_link("fOo")).to eq("FOo")
-    end
-    it 'normalizes case of namespace prefix' do
-      pending "not sure if to implement here" do
-        expect(subject.normalize_link("fOoO:Bar")).to eq("Fooo:Bar")
+    context 'when anchor is true' do
+      it 'removes spare spaces and underscores ' do
+        expect(subject.normalize_link(" Jimbo_ __  Wales__", true)).to eq("Jimbo Wales")
+      end
+      it 'preserves case of all the letters' do
+        expect(subject.normalize_link("fOo", true)).to eq("fOo")
       end
     end
   end
