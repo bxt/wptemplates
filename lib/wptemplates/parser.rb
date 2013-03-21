@@ -80,7 +80,6 @@ module Wptemplates
     def parse_link
       if @input.scan(a_link)
         url, label, letters = (1..3).map {|i| @input[i]}
-        letters ||= ""
         if label == ""
           pipe_trick url, label, letters
         else

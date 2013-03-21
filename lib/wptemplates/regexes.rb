@@ -65,7 +65,7 @@ module Wptemplates
             \| (?<link-description>([^\]]|\](?!\]))*)
           )?
         \]\]
-        (?<extra_letters>\p{L}+)?
+        (?<extra_letters>\p{L}*)
       /x
     end
     

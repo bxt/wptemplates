@@ -278,14 +278,14 @@ describe Wptemplates::Regexes do
       expect(s.matched).to eq("[[foo]]")
       expect(s[1]).to eq("foo")
       expect(s[2]).to be_nil
-      expect(s[3]).to be_nil
+      expect(s[3]).to eq("")
     end
     it 'consumes only the normal link' do
       s = scanner_after("[[foo]].")
       expect(s.matched).to eq("[[foo]]")
       expect(s[1]).to eq("foo")
       expect(s[2]).to be_nil
-      expect(s[3]).to be_nil
+      expect(s[3]).to eq("")
     end
     it 'consumes some extra letters after closing brackets' do
       s = scanner_after("[[foo]]nx.")
@@ -299,7 +299,7 @@ describe Wptemplates::Regexes do
       expect(s.matched).to eq("[[foo|bar]]")
       expect(s[1]).to eq("foo")
       expect(s[2]).to eq("bar")
-      expect(s[3]).to be_nil
+      expect(s[3]).to eq("")
     end
     it 'consumes a link label and extra letters' do
       s = scanner_after("[[foo|bar]]ny.")
@@ -313,7 +313,7 @@ describe Wptemplates::Regexes do
       expect(s.matched).to eq("[[foo|]]")
       expect(s[1]).to eq("foo")
       expect(s[2]).to eq("")
-      expect(s[3]).to be_nil
+      expect(s[3]).to eq("")
     end
     it 'consumes a link with an anchor' do
       s = scanner_after("[[foo#ro|bar]]ny.")
@@ -368,7 +368,7 @@ describe Wptemplates::Regexes do
       expect(s.matched).to eq("[[ ]]")
       expect(s[1]).to eq(" ")
       expect(s[2]).to be_nil
-      expect(s[3]).to be_nil
+      expect(s[3]).to eq("")
     end
   end
   
