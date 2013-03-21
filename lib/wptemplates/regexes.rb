@@ -31,7 +31,21 @@ module Wptemplates
     end
     
     def a_link
-      /\[\[(?<link>[%!"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\u0080-\uFFFF+]+(?:#[#%!"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\u0080-\uFFFF+]+)?)(\|(?<link-description>([^]]|\](?!\]))+))?\]\](?<extra_letters>\p{L}+)?/
+      /
+        \[\[
+          (?<link>
+            # ([% title-legal-chars])+
+            [%!"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\u0080-\uFFFF+]+
+            # ("#" [# % title-legal-chars]+)?
+            (\#[\#%!"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\u0080-\uFFFF+]+)?
+          )
+          (
+            # "|" LEGAL_ARTICLE_ENTITY*
+            \| (?<link-description>([^]]|\](?!\]))+)
+          )?
+        \]\]
+        (?<extra_letters>\p{L}+)?
+      /x
     end
     
   end
