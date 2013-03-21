@@ -8,6 +8,8 @@ describe Wptemplates do
     expect(parsed.text).to eq("")
     expect(parsed.links.length).to eq(0)
     expect(parsed.templates.length).to eq(0)
+    expect(parsed.all_links.length).to eq(0)
+    expect(parsed.all_templates.length).to eq(0)
     expect(parsed[0].text).to eq("")
   end
   
@@ -39,6 +41,8 @@ describe Wptemplates do
     parsed = subject.parse("{{baz|[[foo]]}}")
     expect(parsed.length).to eq(1)
     expect(parsed.text).to eq("")
+    expect(parsed.all_links.length).to eq(1)
+    expect(parsed.all_templates.length).to eq(1)
     expect(parsed.templates.length).to eq(1)
     expect(parsed[0].text).to eq("")
     expect(parsed[0].name).to eq(:baz)
