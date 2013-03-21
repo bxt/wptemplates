@@ -9,11 +9,8 @@ RDoc::Task.new(:rdoc) do |rdoc|
 end
 
 namespace :rdoc do
-  
-  browser = "chromium"
-  
-  desc "Open the rdocs in #{browser}"
-  task :open => :rdoc do
-    sh "#{browser} rdoc/index.html"
+  desc "Open the rdocs in browser"
+  task :open => [:rdoc, :browser] do
+    sh "#{ENV["DEVELOPMENT_WEBBROWSER"]} rdoc/index.html"
   end
 end
