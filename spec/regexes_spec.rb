@@ -317,6 +317,20 @@ describe Wptemplates::Regexes do
       expect(s[2]).to eq("b]c")
       expect(s[3]).to eq("d")
     end
+    it 'consumes parens in urls' do
+      s = scanner_after("[[a(b)|c]]d.")
+      expect(s.matched).to eq("[[a(b)|c]]d")
+      expect(s[1]).to eq("a(b)")
+      expect(s[2]).to eq("c")
+      expect(s[3]).to eq("d")
+    end
+    it 'consumes commas in urls' do
+      s = scanner_after("[[a,b|c]]d.")
+      expect(s.matched).to eq("[[a,b|c]]d")
+      expect(s[1]).to eq("a,b")
+      expect(s[2]).to eq("c")
+      expect(s[3]).to eq("d")
+    end
   end
   
 end
