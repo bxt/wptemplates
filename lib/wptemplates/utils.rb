@@ -2,12 +2,12 @@ module Wptemplates
   module Utils
     module_function
     
-    def normalize_link string
+    def normalize_link string, anchor = false
       normalized = string.clone
       normalized.tr!('_',' ')
       normalized.strip!
       normalized.squeeze!(' ')
-      normalized[0] = normalized[0,1].upcase
+      normalized[0] = normalized[0,1].upcase unless anchor
       normalized
     end
     
