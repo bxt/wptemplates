@@ -39,7 +39,7 @@ describe Wptemplates::Utils do
     end
   end
   
-  describe '.fixpoint', focus: true do
+  describe '.fixpoint' do
     it 'returns nil when immideatly given nil' do
       expect(subject.fixpoint {nil}).to be_nil
     end
