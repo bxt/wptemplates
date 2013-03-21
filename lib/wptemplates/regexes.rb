@@ -3,7 +3,13 @@ module Wptemplates
     module_function
     
     def till_doublebrace_doubleopenbrackets_or_pipe
-      /([^{}\[|]|{(?!{)|}(?!})|\[(?!\[)|^\[\[)+/
+      /(
+         [^{}\[|] # Unproblematic chars
+      |  { (?!{ ) # A lone open brace
+      |  } (?!} ) # A lone close brace
+      |  \[(?!\[) # A lone open bracket
+      |  ^\[\[    # Doubleopenbrackets at start
+      )+/x
     end
     
     def till_doubleopenbrace_or_doubleopenbrackets
