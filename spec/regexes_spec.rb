@@ -19,52 +19,73 @@ describe Wptemplates::Regexes do
   describe '.till_doublebrace_doubleopenbrackets_or_pipe' do
     include ScanShortcutFor(:till_doublebrace_doubleopenbrackets_or_pipe)
     
-    it 'consumes a string with no doublebraces or pipes at all' do
+    it 'consumes a string with no doublebraces or doubleopenbrackets or pipes at all' do
       expect(scan "abc").to eq("abc")
     end
-    it 'consumes until doublebraces or pipe' do
+    it 'consumes until doublebraces or doubleopenbrackets or pipe' do
       expect(scan "abc{{d").to eq("abc")
       expect(scan "abc|d").to eq("abc")
       expect(scan "abc}}d").to eq("abc")
+      expect(scan "abc[[d").to eq("abc")
     end
     it 'does not accept an empty string (epsilon transition)' do
       expect(scan "{{d").to be_false
       expect(scan "|d").to be_false
       expect(scan "}}d").to be_false
+      expect(scan "[[d").to be_false
     end
-    it 'consumes until doublebraces or pipe even if other braces and pipes show up (not greedy)' do
+    it 'consumes until doublebraces or doubleopenbrackets or pipe even if other braces and pipes show up (not greedy)' do
       expect(scan "ab|c{{d}}e").to eq("ab")
       expect(scan "ab|c|d|e").to eq("ab")
       expect(scan "ab{{c|d}}e").to eq("ab")
       expect(scan "ab}}c|d{{e").to eq("ab")
+      expect(scan "ab[[c|d}}e").to eq("ab")
+      expect(scan "ab[[c|d{{e").to eq("ab")
     end
     it 'ignores lone braces' do
       expect(scan "ab{c|d}}e").to eq("ab{c")
       expect(scan "ab}c|d{{e").to eq("ab}c")
+    end
+    it 'ignores lone openbrackets' do
+      expect(scan "ab[c|d}}e").to eq("ab[c")
+    end
+    it 'ignores closebrackets' do
+      expect(scan "ab]]c|d}}e").to eq("ab]]c")
     end
   end
   
   describe '.till_doubleopenbrace_or_doubleopenbrackets' do
     include ScanShortcutFor(:till_doubleopenbrace_or_doubleopenbrackets)
     
-    it 'consumes a string with no doubleopenbraces at all' do
+    it 'consumes a string with no doubleopenbraces or doubleopenbrackets at all' do
       expect(scan "abc").to eq("abc")
       expect(scan "ab}}c").to eq("ab}}c")
       expect(scan "ab|c").to eq("ab|c")
+      expect(scan "ab]]c").to eq("ab]]c")
     end
     it 'consumes until doubleopenbraces' do
       expect(scan "abc{{d").to eq("abc")
       expect(scan "abc|d{{").to eq("abc|d")
       expect(scan "abc}}d{{").to eq("abc}}d")
     end
+    it 'consumes until doubleopenbrackets' do
+      expect(scan "abc[[d").to eq("abc")
+      expect(scan "abc|d[[").to eq("abc|d")
+      expect(scan "abc]]d[[").to eq("abc]]d")
+    end
     it 'does not accept an empty string (epsilon transition)' do
       expect(scan "{{d").to be_false
+      expect(scan "[[d").to be_false
     end
-    it 'consumes until doubleopenbraces even if other doubleopenbraces show up (not greedy)' do
+    it 'consumes until doubleopenbraces/brackets if other doubleopenbraces/brackets show up (not greedy)' do
       expect(scan "ab{{d{{e").to eq("ab")
+      expect(scan "ab[[d{{e").to eq("ab")
+      expect(scan "ab[[d[[e").to eq("ab")
+      expect(scan "ab{{d[[e").to eq("ab")
     end
-    it 'ignores lone braces' do
-      expect(scan "ab{c{{e").to eq("ab{c")
+    it 'ignores lone braces and brackets' do
+      expect(scan "ab[{c{{e").to eq("ab[{c")
+      expect(scan "ab[{c[[e").to eq("ab[{c")
     end
   end
   
