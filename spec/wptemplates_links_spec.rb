@@ -188,6 +188,15 @@ describe Wptemplates do
     expect(parsed[0].link).to eq("A")
   end
   
+  it "continures the pipe trick stripping a lot" do
+    parsed = subject.parse("[[x(d), (d), (d), d(b), c|]]")
+    expect(parsed.length).to eq(1)
+    expect(parsed.text).to eq("x")
+    expect(parsed.links.length).to eq(1)
+    expect(parsed[0].text).to eq("x")
+    expect(parsed[0].link).to eq("X(d), (d), (d), d(b), c")
+  end
+  
   it "may contain pipes in the description" do
     parsed = subject.parse("[[a|b|c]]d")
     expect(parsed.length).to eq(2)
