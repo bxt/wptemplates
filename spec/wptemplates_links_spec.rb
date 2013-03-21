@@ -199,7 +199,7 @@ describe Wptemplates do
   
   it "may contain pipes in the description" do
     parsed = subject.parse("[[a|b|c]]d")
-    expect(parsed.length).to eq(2)
+    expect(parsed.length).to eq(1)
     expect(parsed.text).to eq("b|cd")
     expect(parsed.links.length).to eq(1)
     expect(parsed[0].text).to eq("b|cd")
