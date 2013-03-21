@@ -276,6 +276,13 @@ describe Wptemplates::Regexes do
       expect(s[2]).to eq("bar")
       expect(s[3]).to eq("ny")
     end
+    it 'consumes an empty link label' do
+      s = scanner_after("[[foo|]].")
+      expect(s.matched).to eq("[[foo|]]")
+      expect(s[1]).to eq("foo")
+      expect(s[2]).to eq("")
+      expect(s[3]).to be_nil
+    end
     it 'consumes a link with an anchor' do
       s = scanner_after("[[foo#ro|bar]]ny.")
       expect(s.matched).to eq("[[foo#ro|bar]]ny")
