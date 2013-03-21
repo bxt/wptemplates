@@ -60,7 +60,7 @@ module Wptemplates
       /^(?<no_parens>.*?) *\(.*\) *$/
     end
     
-    def last_comma
+    def first_comma
       /^(?<before>([^,]|,(?! ))*)(, |$)/
     end
     

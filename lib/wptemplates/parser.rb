@@ -96,7 +96,7 @@ module Wptemplates
         link_new_with_normalize(m[:no_parens]+letters, url, nil)
       else
         label = fixpoint(clone: true, start: url) do |u|
-          u[last_comma,:before][parens, :before]
+          u[first_comma,:before][parens, :before]
         end
         link_new_with_normalize(label+letters, url, nil)
       end
