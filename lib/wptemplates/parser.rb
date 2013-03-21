@@ -62,8 +62,10 @@ module Wptemplates
       if @input.scan(from_pipe_till_equals_no_doubleclosebrace_or_pipe)
         key = symbolize(@input[1])
         value = parse_main(true)
-        value[ 0].text.lstrip!
-        value[-1].text.rstrip!
+        {l:0,r:-1}.each do |d,i|
+          value[i].text.send(:"#{d}strip!")
+          value.delete_at(i) if value[i].text.empty? && (value.length > 1)
+        end
         h[key] = value
       end
     end
