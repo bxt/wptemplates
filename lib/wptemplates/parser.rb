@@ -87,21 +87,25 @@ module Wptemplates
       if @input.scan(a_link)
         url, label, letters = (1..3).map {|i| @input[i]}
         if label == "" # pipe trick
-          if url["#"]
-            nil
-          elsif /^(?<fronturl>.*?)\(.*\) *$/ =~ url
-            link_new_with_normalize(fronturl, url, nil)
-          else
-            label = fixpoint(clone: true, start: url.clone) do |u|
-              u[/^(([^,]|,(?! ))*)(, |$)/,1][/^(?<fronturl>.*?)(\(.*\) *)?$/, :fronturl]
-            end
-            link_new_with_normalize("#{label}#{letters}", url, nil)
-          end
+          pipe_trick url, label, letters
         else
-          link_new_with_normalize "#{label || url}#{letters}", url[/[^#]*/], url[/(?<=#).*/]
+          link_new_with_normalize "#{label || url}#{letters}", url[until_hash], url[after_hash]
         end
       else
         nil
+      end
+    end
+    
+    def pipe_trick url, label, letters
+      if url["#"]
+        nil
+      elsif m = has_parens.match(url)
+        link_new_with_normalize(m[:no_parens], url, nil)
+      else
+        label = fixpoint(clone: true, start: url.clone) do |u|
+          u[last_comma,:before][parens, :before]
+        end
+        link_new_with_normalize("#{label}#{letters}", url, nil)
       end
     end
     

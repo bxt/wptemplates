@@ -48,5 +48,25 @@ module Wptemplates
       /x
     end
     
+    def until_hash
+      /[^#]*/
+    end
+    
+    def after_hash
+      /(?<=#).*/
+    end
+    
+    def has_parens
+      /^(?<no_parens>.*?)\(.*\) *$/
+    end
+    
+    def last_comma
+      /^(?<before>([^,]|,(?! ))*)(, |$)/
+    end
+    
+    def parens
+      /^(?<before>.*?)(\(.*\) *)?$/
+    end
+    
   end
 end
