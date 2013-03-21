@@ -30,5 +30,7 @@ module Wptemplates
       /}}/
     end
     
+    def a_link
+    end
   end
 end

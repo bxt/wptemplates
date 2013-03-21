@@ -238,4 +238,71 @@ describe Wptemplates::Regexes do
     end
   end
   
+  describe '.a_link' do
+    include ScanShortcutFor(:a_link)
+    
+    it 'consumes a normal link' do
+      s = scanner_after("[[foo]]")
+      expect(s.matched).to eq("[[foo]]")
+      expect(s[1]).to eq("foo")
+      expect(s[2]).to be_nil
+      expect(s[3]).to be_nil
+    end
+    it 'consumes only the normal link' do
+      s = scanner_after("[[foo]].")
+      expect(s.matched).to eq("[[foo]]")
+      expect(s[1]).to eq("foo")
+      expect(s[2]).to be_nil
+      expect(s[3]).to be_nil
+    end
+    it 'consumes some extra letters after closing brackets' do
+      s = scanner_after("[[foo]]nx.")
+      expect(s.matched).to eq("[[foo]]nx")
+      expect(s[1]).to eq("foo")
+      expect(s[2]).to be_nil
+      expect(s[3]).to eq("nx")
+    end
+    it 'consumes a link label' do
+      s = scanner_after("[[foo|bar]].")
+      expect(s.matched).to eq("[[foo|bar]]")
+      expect(s[1]).to eq("foo")
+      expect(s[2]).to eq("bar")
+      expect(s[3]).to be_nil
+    end
+    it 'consumes a link label and extra letters' do
+      s = scanner_after("[[foo|bar]]ny.")
+      expect(s.matched).to eq("[[foo|bar]]ny")
+      expect(s[1]).to eq("foo")
+      expect(s[2]).to eq("bar")
+      expect(s[3]).to eq("ny")
+    end
+    it 'consumes a link with an anchor' do
+      s = scanner_after("[[foo#ro|bar]]ny.")
+      expect(s.matched).to eq("[[foo#ro|bar]]ny")
+      expect(s[1]).to eq("foo#ro")
+      expect(s[2]).to eq("bar")
+      expect(s[3]).to eq("ny")
+    end
+    it 'does not consume unclosed links' do
+      expect(scan "[[a").to be_false
+    end
+    it 'does not consume unclosed links with newlines' do
+      expect(scan "[[a\nb]]").to be_false
+    end
+    it 'consume only to the first pair of brackets even if there are others around' do
+      s = scanner_after("[[a]]b]]c,x")
+      expect(s.matched).to eq("[[a]]b")
+      expect(s[1]).to eq("a")
+      expect(s[2]).to be_nil
+      expect(s[3]).to eq("b")
+    end
+    it 'consumes pipes in the label' do
+      s = scanner_after("[[a|b|c]]d,x")
+      expect(s.matched).to eq("[[a|b|c]]d")
+      expect(s[1]).to eq("a")
+      expect(s[2]).to eq("b|c")
+      expect(s[3]).to eq("d")
+    end
+  end
+  
 end
