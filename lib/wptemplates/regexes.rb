@@ -57,7 +57,7 @@ module Wptemplates
     end
     
     def has_parens
-      /^(?<no_parens>.*?)\(.*\) *$/
+      /^(?<no_parens>.*?) *\(.*\) *$/
     end
     
     def last_comma
