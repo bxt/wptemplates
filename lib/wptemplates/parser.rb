@@ -78,10 +78,11 @@ module Wptemplates
     def parse_link
       if @input.scan(a_link)
         url, label, letters = (1..3).map {|i| @input[i]}
+        letters ||= ""
         if label == ""
           pipe_trick url, label, letters
         else
-          link_new_with_normalize "#{label || url}#{letters}", url[until_hash], url[after_hash]
+          link_new_with_normalize (label || url)+letters, url[until_hash], url[after_hash]
         end
       end
     end
@@ -95,7 +96,7 @@ module Wptemplates
         label = fixpoint(clone: true, start: url) do |u|
           u[last_comma,:before][parens, :before]
         end
-        link_new_with_normalize("#{label}#{letters}", url, nil)
+        link_new_with_normalize(label+letters, url, nil)
       end
     end
     
