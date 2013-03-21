@@ -24,5 +24,14 @@ module Wptemplates
       symbolized.downcase.to_sym
     end
     
+    def fixpoint start = nil
+      cur = start
+      begin
+        pre = cur
+        cur = yield(cur)
+      end while cur != pre
+      cur
+    end
+    
   end
 end

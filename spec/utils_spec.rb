@@ -39,4 +39,25 @@ describe Wptemplates::Utils do
     end
   end
   
+  describe '.fixpoint', focus: true do
+    it 'returns nil when immideatly given nil' do
+      expect(subject.fixpoint {nil}).to be_nil
+    end
+    it 'returns the start value when passed the identity' do
+      expect(subject.fixpoint(5) { |x| x } ).to eq(5)
+      expect(subject.fixpoint("haha") { |x| x } ).to eq("haha")
+    end
+    it 'finds the fixpoint of some string algorithm' do
+      expect(subject.fixpoint("haha") { |x| y=x.clone; y[0,1]=""; y } ).to eq("")
+    end
+    it 'finds the fixpoint of some string algorithm with outer var' do
+      x = "haha lol"
+      expect(subject.fixpoint { x[0,1]=""; x.clone }).to eq("")
+      expect(x).to eq("")
+    end
+    it 'finds the fixpoint of cos' do
+      expect(subject.fixpoint(10) { |x| Math.cos(x) }).to be_within(1.0e-6).of(0.739085)
+    end
+  end
+  
 end
