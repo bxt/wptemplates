@@ -5,7 +5,7 @@ module Wptemplates
       []
     end
     def all_templates
-      []
+      templates
     end
     def text
       ""
@@ -26,7 +26,7 @@ module Wptemplates
       []
     end
     def all_links
-      []
+      links
     end
   end
   
