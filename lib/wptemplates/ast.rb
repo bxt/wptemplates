@@ -22,7 +22,12 @@ module Wptemplates
     def template_of type
       all_templates_of(type).first
     end
-    
+    def links
+      []
+    end
+    def all_links
+      []
+    end
   end
   
   class Soup < Array
@@ -30,8 +35,14 @@ module Wptemplates
     def templates
       map(&:templates).flatten(1)
     end
+    def links
+      map(&:links).flatten(1)
+    end
     def all_templates
       map(&:all_templates).flatten(1)
+    end
+    def all_links
+      map(&:all_links).flatten(1)
     end
     def text
       map(&:text).join('')
@@ -51,6 +62,9 @@ module Wptemplates
     def all_templates
       templates + @params.map{|_,v| v.templates }.flatten(1)
     end
+    def all_links
+      links + @params.map{|_,v| v.all_links }.flatten(1)
+    end
   end
   
   class Text
@@ -58,6 +72,19 @@ module Wptemplates
     attr_reader :text
     def initialize(text)
       @text = text
+    end
+  end
+  
+  class Link
+    include Node
+    attr_reader :text, :link, :anchor
+    def initialize(text, link, anchor)
+      @text = text
+      @link = link
+      @anchor = anchor
+    end
+    def links
+      [self]
     end
   end
   
