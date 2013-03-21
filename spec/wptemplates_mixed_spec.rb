@@ -2,6 +2,15 @@ require 'spec_helper'
 
 describe Wptemplates do
   
+  it "parses the empty string" do
+    parsed = subject.parse("")
+    expect(parsed.length).to eq(1)
+    expect(parsed.text).to eq("")
+    expect(parsed.links.length).to eq(0)
+    expect(parsed.templates.length).to eq(0)
+    expect(parsed[0].text).to eq("")
+  end
+  
   it "parses link, text, template" do
     parsed = subject.parse("[[foo]] bar {{baz}}")
     expect(parsed.length).to eq(3)
