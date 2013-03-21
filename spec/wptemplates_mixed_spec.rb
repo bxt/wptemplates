@@ -16,7 +16,6 @@ describe Wptemplates do
   
   it "parses template, text, link" do
     parsed = subject.parse("{{baz}} bar [[foo]]")
-    pp(parsed)
     expect(parsed.length).to eq(3)
     expect(parsed.text).to eq(" bar foo")
     expect(parsed.links.length).to eq(1)
@@ -43,7 +42,6 @@ describe Wptemplates do
   
   it "parses text, link, letters, link" do
     parsed = subject.parse("bar [[foo]]ny baz")
-    pp(parsed)
     expect(parsed.length).to eq(3)
     expect(parsed.text).to eq("bar foony baz")
     expect(parsed.links.length).to eq(1)
