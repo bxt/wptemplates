@@ -148,9 +148,13 @@ describe Wptemplates do
   
   it "finds nested templates" do
     parsed = subject.parse("{{foo| a = {{bar|j|k}} |b = y {{foo|p=q}} y2 \n|c= z z }}")
+    expect(parsed.template_of :foo).to eq(parsed.templates[0])
     expect(parsed.templates_of :foo).to eq([parsed.templates[0]])
+    expect(parsed.deep_template_of :foo).to eq(parsed.templates[0])
     expect(parsed.all_templates_of :foo).to eq([parsed.templates[0], parsed.templates[0].params[:b].templates[0]])
+    expect(parsed.template_of :bar).to be_nil
     expect(parsed.templates_of :bar).to eq([])
+    expect(parsed.deep_template_of :bar).to eq(parsed.templates[0].params[:a].templates[0])
     expect(parsed.all_templates_of :bar).to eq([parsed.templates[0].params[:a].templates[0]])
   end
   
