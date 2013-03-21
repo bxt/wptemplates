@@ -331,6 +331,13 @@ describe Wptemplates::Regexes do
       expect(s[2]).to eq("c")
       expect(s[3]).to eq("d")
     end
+    it 'consumes spaces in urls' do
+      s = scanner_after("[[ ]]")
+      expect(s.matched).to eq("[[ ]]")
+      expect(s[1]).to eq(" ")
+      expect(s[2]).to be_nil
+      expect(s[3]).to be_nil
+    end
   end
   
 end
