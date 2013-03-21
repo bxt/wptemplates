@@ -41,7 +41,7 @@ module Wptemplates
           )
           (
             # "|" LEGAL_ARTICLE_ENTITY*
-            \| (?<link-description>([^]]|\](?!\]))*)
+            \| (?<link-description>([^\]]|\](?!\]))*)
           )?
         \]\]
         (?<extra_letters>\p{L}+)?
