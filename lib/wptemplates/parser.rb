@@ -18,7 +18,7 @@ module Wptemplates
     def parse_main in_template_parameter = false
       output = Soup.new
 
-      while unit = parse_template || parse_anything(in_template_parameter)
+      while unit = parse_link || parse_template || parse_anything(in_template_parameter)
         output << unit
       end
       
@@ -78,6 +78,24 @@ module Wptemplates
       if @input.scan(a_pipe)
         value = parse_main(true)
         h[i] = value
+      else
+        nil
+      end
+    end
+    
+    def parse_link
+      if @input.scan(a_link)
+        url = @input[1]
+        label = @input[2]
+        letters = @input[3] || ""
+        if label == "" # pipe trick
+        else
+          text = normalize_linklabel("#{label || url}#{letters}")
+          link = normalize_link(url[/[^#]*/])
+          anchor = url[/(?<=#).*/]
+          anchor = normalize_link(anchor, true) unless anchor.nil?
+          Link.new(text, link, anchor)
+        end
       else
         nil
       end
