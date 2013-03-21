@@ -28,11 +28,17 @@ describe Wptemplates::Regexes do
       expect(scan "abc}}d").to eq("abc")
       expect(scan "abc[[d").to eq("abc")
     end
-    it 'does not accept an empty string (epsilon transition)' do
+     it 'ignores starting doubleopenbrackets' do
+      expect(scan "[[abc").to eq("[[abc")
+      expect(scan "[[abc{{d").to eq("[[abc")
+      expect(scan "[[abc|d").to eq("[[abc")
+      expect(scan "[[abc}}d").to eq("[[abc")
+      expect(scan "[[abc[[d").to eq("[[abc")
+    end
+   it 'does not accept an empty string (epsilon transition)' do
       expect(scan "{{d").to be_false
       expect(scan "|d").to be_false
       expect(scan "}}d").to be_false
-      expect(scan "[[d").to be_false
     end
     it 'consumes until doublebraces or doubleopenbrackets or pipe even if other braces and pipes show up (not greedy)' do
       expect(scan "ab|c{{d}}e").to eq("ab")
@@ -68,6 +74,12 @@ describe Wptemplates::Regexes do
       expect(scan "abc|d{{").to eq("abc|d")
       expect(scan "abc}}d{{").to eq("abc}}d")
     end
+    it 'ignores starting doubleopenbrackets' do
+      expect(scan "[[abc").to eq("[[abc")
+      expect(scan "[[abc{{d").to eq("[[abc")
+      expect(scan "[[abc|d{{").to eq("[[abc|d")
+      expect(scan "[[abc}}d{{").to eq("[[abc}}d")
+    end
     it 'consumes until doubleopenbrackets' do
       expect(scan "abc[[d").to eq("abc")
       expect(scan "abc|d[[").to eq("abc|d")
@@ -75,7 +87,6 @@ describe Wptemplates::Regexes do
     end
     it 'does not accept an empty string (epsilon transition)' do
       expect(scan "{{d").to be_false
-      expect(scan "[[d").to be_false
     end
     it 'consumes until doubleopenbraces/brackets if other doubleopenbraces/brackets show up (not greedy)' do
       expect(scan "ab{{d{{e").to eq("ab")
