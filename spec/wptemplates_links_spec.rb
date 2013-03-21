@@ -123,10 +123,19 @@ describe Wptemplates do
   it "parses a link with pipe trick when there is something after parens but there are commas" do
     parsed = subject.parse("[[a(b), c|]]")
     expect(parsed.length).to eq(1)
-    expect(parsed.text).to eq("a(b)")
+    expect(parsed.text).to eq("a")
     expect(parsed.links.length).to eq(1)
-    expect(parsed[0].text).to eq("a(b)")
-    expect(parsed[0].link).to eq("A(b)")
+    expect(parsed[0].text).to eq("a")
+    expect(parsed[0].link).to eq("A(b), c")
+  end
+  
+  it "parses a link with pipe trick when where is something other than comma after parens an then more commas" do
+    parsed = subject.parse("[[a(b)x, c|]]")
+    expect(parsed.length).to eq(1)
+    expect(parsed.text).to eq("a(b)x")
+    expect(parsed.links.length).to eq(1)
+    expect(parsed[0].text).to eq("a(b)x")
+    expect(parsed[0].link).to eq("A(b)x, c")
   end
   
   it "parses a link with pipe trick when where is something after parens but there are commas before" do
