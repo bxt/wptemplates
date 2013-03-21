@@ -29,7 +29,14 @@ module Wptemplates
     end
     
     def from_pipe_till_equals_no_doubleclosebrace_or_pipe
-      /\|(([^|=}]|}(?!}))*)=/
+      /
+        \| # Pipe
+        ((
+         [^|=}]   # Unproblematic chars
+        |}(?!})   # A lone close brace
+        )*)
+        = # Equals
+      /x
     end
     
     def a_pipe
