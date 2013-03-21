@@ -24,10 +24,11 @@ module Wptemplates
       symbolized.downcase.to_sym
     end
     
-    def fixpoint start = nil
-      cur = start
+    def fixpoint options = {}
+      clone = options[:clone] || false
+      cur = options[:start]
       begin
-        pre = cur
+        pre = clone && !cur.nil? ? cur.clone : cur
         cur = yield(cur)
       end while cur != pre
       cur
