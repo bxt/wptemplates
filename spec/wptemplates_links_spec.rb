@@ -111,7 +111,7 @@ describe Wptemplates do
     expect(parsed[0].link).to eq("A(b")
   end
   
-  it "parses a link without pipe trick when where is something after parens" do
+  it "parses a link without pipe trick when there is something after parens" do
     parsed = subject.parse("[[a (b) c|]]")
     expect(parsed.length).to eq(1)
     expect(parsed.text).to eq("a (b) c")
@@ -120,7 +120,7 @@ describe Wptemplates do
     expect(parsed[0].link).to eq("A (b) c")
   end
   
-  it "parses a link with pipe trick when where is something after parens but there are commas" do
+  it "parses a link with pipe trick when there is something after parens but there are commas" do
     parsed = subject.parse("[[a(b), c|]]")
     expect(parsed.length).to eq(1)
     expect(parsed.text).to eq("a(b)")
