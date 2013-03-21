@@ -6,9 +6,12 @@ describe Wptemplates do
     parsed = subject.parse("[[foo]]")
     expect(parsed.length).to eq(1)
     expect(parsed.text).to eq("foo")
-    expect(parsed.links.length).to eq(1)
+    expect(parsed.links).to eq([parsed[0]])
+    expect(parsed.all_links).to eq([parsed[0]])
     expect(parsed[0].text).to eq("foo")
     expect(parsed[0].link).to eq("Foo")
+    expect(parsed[0].links).to eq([parsed[0]])
+    expect(parsed[0].all_links).to eq([parsed[0]])
     expect(parsed[0].anchor).to be_nil
   end
   
