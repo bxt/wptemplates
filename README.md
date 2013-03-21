@@ -6,7 +6,7 @@ It will help you to extract useful machine-readable data from
 wikipedia articles, since there ist a lot of useful stuff
 encoded as templates.
 
-Currently only templates are parsed, all other markup is ignored.
+Currently only templates and links are parsed, all other markup is ignored.
 
 ## Installation
 
@@ -25,7 +25,7 @@ The gem is currently not in the rubygems.org repository.
 To parse a piece of markup simply call:
 
 <!-- EXAMPLES:INIT -->
-    ast = Wptemplates.parse("{{foo | bar | x = 3 }} baz")
+    ast = Wptemplates.parse("{{foo | bar | x = 3 }} baz [[bam (2003)|]]y")
 
 <!-- /EXAMPLES -->
 
@@ -35,11 +35,19 @@ these methods:
 
 <!-- EXAMPLES:intro -->
     ast.templates.is_a?(Array) && ast.templates.length #=> 1
-    ast.text #=> " baz"
+    ast.text #=> " baz bamy"
     ast[0].name #=> :foo
     ast[0].params[0].text #=> " bar "
     ast[0].params[:x].text #=> "3"
     ast.all_templates_of(:foo).map{|t| t.params[:x].text} => ["3"]
+<!-- /EXAMPLES -->
+
+You can access the links via: 
+
+<!-- EXAMPLES:links -->
+    ast.links.length #=> 1
+    ast.links[0].text #=> "bamy"
+    ast.all_links.map{|l| l.link} => ["bam (2003)"]
 <!-- /EXAMPLES -->
 
 ## Developing
