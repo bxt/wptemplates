@@ -372,4 +372,87 @@ describe Wptemplates::Regexes do
     end
   end
   
+  describe '.until_hash' do
+    it 'prints the part to the first hash, excluding' do
+      expect("abc#def"[subject.until_hash]).to eq("abc")
+      expect("abc#d#ef"[subject.until_hash]).to eq("abc")
+      expect("abc#def#"[subject.until_hash]).to eq("abc")
+      expect("abc#"[subject.until_hash]).to eq("abc")
+    end
+    it 'prints everything if there is no hash' do
+      expect("abc"[subject.until_hash]).to eq("abc")
+    end
+  end
+  
+  describe '.after_hash' do
+    it 'prints the part after the first hash, excluding' do
+      expect("abc#def"[subject.after_hash]).to eq("def")
+      expect("abc#d#ef"[subject.after_hash]).to eq("d#ef")
+      expect("abc#def#"[subject.after_hash]).to eq("def#")
+      expect("abc#"[subject.after_hash]).to eq("")
+    end
+    it 'returns nil if there is no hash' do
+      expect("abc"[subject.after_hash]).to be_nil
+    end
+  end
+  
+  describe '.has_parens' do
+    it 'detects if there are matching parens at the end' do
+      expect("abc(def)"[subject.has_parens]).to be_true
+      expect("abc (def)"[subject.has_parens]).to be_true
+      expect("abc (def) "[subject.has_parens]).to be_true
+      expect("abc(def) "[subject.has_parens]).to be_true
+      expect("abc(d(ef)"[subject.has_parens]).to be_true
+      expect("abc(d(e)f)"[subject.has_parens]).to be_true
+      expect("abc(d(ef)"[subject.has_parens]).to be_true
+      expect("abc(d)e(f)"[subject.has_parens]).to be_true
+      expect("abc(def"[subject.has_parens]).to be_false
+      expect("abc)def"[subject.has_parens]).to be_false
+      expect("abc"[subject.has_parens]).to be_false
+    end
+    it 'returns the part without parens as :no_parens' do
+      expect("abc(def)"[subject.has_parens, :no_parens]).to eq("abc")
+      expect("abc (def)"[subject.has_parens, :no_parens]).to eq("abc")
+      expect("abc (def) "[subject.has_parens, :no_parens]).to eq("abc")
+      expect("abc(def) "[subject.has_parens, :no_parens]).to eq("abc")
+      expect("abc(d(ef)"[subject.has_parens, :no_parens]).to eq("abc")
+      expect("abc(d(e)f)"[subject.has_parens, :no_parens]).to eq("abc")
+      expect("abc(d(ef)"[subject.has_parens, :no_parens]).to eq("abc")
+      expect("abc(d)e(f)"[subject.has_parens, :no_parens]).to eq("abc")
+      expect("abc(def"[subject.has_parens, :no_parens]).to be_nil
+      expect("abc)def"[subject.has_parens, :no_parens]).to be_nil
+      expect("abc"[subject.has_parens, :no_parens]).to be_nil
+    end
+  end
+  
+  describe '.first_comma' do
+    it 'returns the part before the first comma and space, excluding, as :before' do
+      expect("abc, def"[subject.first_comma, :before]).to eq("abc")
+      expect("abc, def, ghi"[subject.first_comma, :before]).to eq("abc")
+      expect("abc def"[subject.first_comma, :before]).to eq("abc def")
+      expect("abc,def"[subject.first_comma, :before]).to eq("abc,def")
+      expect("abc,"[subject.first_comma, :before]).to eq("abc,")
+      expect(",abc"[subject.first_comma, :before]).to eq(",abc")
+      expect(", abc"[subject.first_comma, :before]).to eq("")
+      expect("a, , b"[subject.first_comma, :before]).to eq("a")
+    end
+  end
+  
+  describe '.first_comma' do
+    it 'returns the part before the matching parens at the end as :before' do
+      expect("abc(def)"[subject.parens, :before]).to eq("abc")
+      # different whitespace behaviour not to loose any valid ", "
+      expect("abc (def)"[subject.parens, :before]).to eq("abc ")
+      expect("abc (def) "[subject.parens, :before]).to eq("abc ")
+      expect("abc(def) "[subject.parens, :before]).to eq("abc")
+      expect("abc(d(ef)"[subject.parens, :before]).to eq("abc")
+      expect("abc(d(e)f)"[subject.parens, :before]).to eq("abc")
+      expect("abc(d(ef)"[subject.parens, :before]).to eq("abc")
+      expect("abc(d)e(f)"[subject.parens, :before]).to eq("abc")
+      expect("abc(def"[subject.parens, :before]).to eq("abc(def")
+      expect("abc)def"[subject.parens, :before]).to eq("abc)def")
+      expect("abc"[subject.parens, :before]).to eq("abc")
+    end
+  end
+  
 end
