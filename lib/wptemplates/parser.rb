@@ -37,9 +37,9 @@ module Wptemplates
     
     def parse_anything in_template_parameter = false
       if in_template_parameter
-        @input.scan(till_doublebrace_or_pipe) && Text.new(@input.matched)
+        @input.scan(till_doublebrace_doubleopenbrackets_or_pipe) && Text.new(@input.matched)
       else
-        @input.scan(till_doubleopenbrace) && Text.new(@input.matched)
+        @input.scan(till_doubleopenbrace_or_doubleopenbrackets) && Text.new(@input.matched)
       end
     end
     

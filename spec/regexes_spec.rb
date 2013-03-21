@@ -16,8 +16,8 @@ end
 
 describe Wptemplates::Regexes do
   
-  describe '.till_doublebrace_or_pipe' do
-    include ScanShortcutFor(:till_doublebrace_or_pipe)
+  describe '.till_doublebrace_doubleopenbrackets_or_pipe' do
+    include ScanShortcutFor(:till_doublebrace_doubleopenbrackets_or_pipe)
     
     it 'consumes a string with no doublebraces or pipes at all' do
       expect(scan "abc").to eq("abc")
@@ -44,8 +44,8 @@ describe Wptemplates::Regexes do
     end
   end
   
-  describe '.till_doubleopenbrace' do
-    include ScanShortcutFor(:till_doubleopenbrace)
+  describe '.till_doubleopenbrace_or_doubleopenbrackets' do
+    include ScanShortcutFor(:till_doubleopenbrace_or_doubleopenbrackets)
     
     it 'consumes a string with no doubleopenbraces at all' do
       expect(scan "abc").to eq("abc")

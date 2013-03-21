@@ -2,11 +2,11 @@ module Wptemplates
   module Regexes
     module_function
     
-    def till_doublebrace_or_pipe
+    def till_doublebrace_doubleopenbrackets_or_pipe
       /([^{}|]|{(?!{)|}(?!}))+/
     end
     
-    def till_doubleopenbrace
+    def till_doubleopenbrace_or_doubleopenbrackets
       /([^{]|{(?!{))+/
     end
     
