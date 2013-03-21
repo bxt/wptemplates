@@ -147,6 +147,15 @@ describe Wptemplates do
     expect(parsed[0].link).to eq("A, (b)c")
   end
   
+  it "parses appends the lettes to a link with pipe trick" do
+    parsed = subject.parse("[[a , c|]]n")
+    expect(parsed.length).to eq(1)
+    expect(parsed.text).to eq("a n")
+    expect(parsed.links.length).to eq(1)
+    expect(parsed[0].text).to eq("a n")
+    expect(parsed[0].link).to eq("A , c")
+  end
+  
   it "normalizes whitespace in link text" do
     parsed = subject.parse("[[ a  b __ c .  d  ]]")
     expect(parsed.length).to eq(1)
