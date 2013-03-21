@@ -34,6 +34,15 @@ describe Wptemplates::Utils do
     end
   end
   
+  describe '.normalize_linklabel' do
+    it 'removes spare spaces but not underscores' do
+      expect(subject.normalize_linklabel(" Jimbo_  __ Wales__")).to eq("Jimbo_ __ Wales__")
+    end
+    it 'preserves case of all the letters' do
+      expect(subject.normalize_linklabel("dJango")).to eq("dJango")
+    end
+  end
+  
   describe '.symbolize' do
     it "symbolizes strings" do
       expect(subject.symbolize(" foo ")).to eq(:foo)
