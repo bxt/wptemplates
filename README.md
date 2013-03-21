@@ -54,7 +54,8 @@ Also, there is a page with [link's BNF][lnbnf].
 
 ### Known Issues
 
-* If you have link in your templates the pipes cause a new parameter
+* If you have images in your templates the pipes cause a new parameter
+* Namespaced links are not recognized
 * nowiki, pre and math blocks are deleted
 
 ## Contributing
