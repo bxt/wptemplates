@@ -9,6 +9,7 @@ describe Wptemplates do
     expect(parsed.links.length).to eq(1)
     expect(parsed[0].text).to eq("foo")
     expect(parsed[0].link).to eq("Foo")
+    expect(parsed[0].anchor).to be_nil
   end
   
   it "parses a basic link with anchor" do
