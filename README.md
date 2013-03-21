@@ -34,20 +34,20 @@ Wptemplates::Template, Wptemplates::Link and Wptemplates::Text.
 You can explore the AST with these methods:
 
 <!-- EXAMPLES:intro -->
-    ast.templates.is_a?(Array) && ast.templates.length #=> 1
-    ast.text #=> " baz bamy"
-    ast[0].name #=> :foo
-    ast[0].params[0].text #=> " bar "
-    ast[0].params[:x].text #=> "3"
-    ast.all_templates_of(:foo).map{|t| t.params[:x].text} => ["3"]
+    ast.templates.is_a?(Array) && ast.templates.length # => 1
+    ast.text # => " baz bamy"
+    ast[0].name # => :foo
+    ast[0].params[0].text # => " bar "
+    ast[0].params[:x].text # => "3"
+    ast.all_templates_of(:foo).map{|t| t.params[:x].text} # => ["3"]
 <!-- /EXAMPLES -->
 
 You can access the links via: 
 
 <!-- EXAMPLES:links -->
-    ast.links.length #=> 1
-    ast.links[0].text #=> "bamy"
-    ast.all_links.map{|l| l.link} => ["bam (2003)"]
+    ast.links.length # => 1
+    ast.links[0].text # => "bamy"
+    ast.all_links.map{|l| l.link} # => ["Bam (2003)"]
 <!-- /EXAMPLES -->
 
 ## Developing
