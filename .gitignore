@@ -16,3 +16,4 @@ spec/examples_spec.rb
 test/tmp
 test/version_tmp
 tmp
+.irb_history
