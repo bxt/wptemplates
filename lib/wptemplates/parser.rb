@@ -32,8 +32,6 @@ module Wptemplates
         template = Template.new parse_template_name, parse_template_parameters
         @input.scan(a_doubleclosingbrace) or raise "unclosed template"
         template
-      else
-        nil
       end
     end
     
@@ -48,8 +46,6 @@ module Wptemplates
     def parse_template_name
       if @input.scan(till_doubleclosebrace_or_pipe)
         symbolize(@input.matched)
-      else
-        nil
       end
     end
     
@@ -69,8 +65,6 @@ module Wptemplates
         value[ 0].text.lstrip!
         value[-1].text.rstrip!
         h[key] = value
-      else
-        nil
       end
     end
     
@@ -78,21 +72,17 @@ module Wptemplates
       if @input.scan(a_pipe)
         value = parse_main(true)
         h[i] = value
-      else
-        nil
       end
     end
     
     def parse_link
       if @input.scan(a_link)
         url, label, letters = (1..3).map {|i| @input[i]}
-        if label == "" # pipe trick
+        if label == ""
           pipe_trick url, label, letters
         else
           link_new_with_normalize "#{label || url}#{letters}", url[until_hash], url[after_hash]
         end
-      else
-        nil
       end
     end
     
