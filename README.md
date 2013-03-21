@@ -30,8 +30,8 @@ To parse a piece of markup simply call:
 <!-- /EXAMPLES -->
 
 You will get an instance of Wptemplates::Soup which is an array of
-Wptemplates::Template and Wptemplates::Text. You can explore the AST with
-these methods:
+Wptemplates::Template, Wptemplates::Link and Wptemplates::Text. 
+You can explore the AST with these methods:
 
 <!-- EXAMPLES:intro -->
     ast.templates.is_a?(Array) && ast.templates.length #=> 1
