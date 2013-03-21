@@ -11,6 +11,13 @@ module Wptemplates
       normalized
     end
     
+    def normalize_linklabel string
+      normalized = string.clone
+      normalized.strip!
+      normalized.squeeze!(' ')
+      normalized
+    end
+    
     def symbolize string
       symbolized = normalize_link(string)
       symbolized.tr!(' ','_')
