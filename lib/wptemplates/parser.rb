@@ -85,20 +85,31 @@ module Wptemplates
     
     def parse_link
       if @input.scan(a_link)
-        url = @input[1]
-        label = @input[2]
-        letters = @input[3] || ""
+        url, label, letters = (1..3).map {|i| @input[i]}
         if label == "" # pipe trick
+          if url["#"]
+            nil
+          elsif /^(?<fronturl>.*?)\(.*\) *$/ =~ url
+            link_new_with_normalize(fronturl, url, nil)
+          else
+            label = fixpoint(clone: true, start: url.clone) do |u|
+              u[/^(([^,]|,(?! ))*)(, |$)/,1][/^(?<fronturl>.*?)(\(.*\) *)?$/, :fronturl]
+            end
+            link_new_with_normalize("#{label}#{letters}", url, nil)
+          end
         else
-          text = normalize_linklabel("#{label || url}#{letters}")
-          link = normalize_link(url[/[^#]*/])
-          anchor = url[/(?<=#).*/]
-          anchor = normalize_link(anchor, true) unless anchor.nil?
-          Link.new(text, link, anchor)
+          link_new_with_normalize "#{label || url}#{letters}", url[/[^#]*/], url[/(?<=#).*/]
         end
       else
         nil
       end
+    end
+    
+    def link_new_with_normalize text, link, anchor
+      text = normalize_linklabel(text)
+      link = normalize_link(link)
+      anchor = normalize_link(anchor, true) unless anchor.nil?
+      Link.new(text, link, anchor)
     end
     
   end
