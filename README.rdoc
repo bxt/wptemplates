@@ -1,0 +1,6 @@
+= Wptemplates
+
+The public entry method for this gem is Wptemplates.parse
+It will give you Wptemplates::Soup, Wptemplates::Link, 
+Wptemplates::Template and Wptemplates::Text elements, 
+which you can traverse and filter. 

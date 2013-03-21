@@ -27,3 +27,17 @@ task 'spec/examples_spec.rb' => 'README.md' do
   test << "\nend\n"
   File.open('spec/examples_spec.rb','w'){ |f| f.puts test }
 end
+
+
+require 'rdoc/task'
+
+RDoc::Task.new(:rdoc) do |rdoc|
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title    = 'Wptemplates'
+  rdoc.options << '--line-numbers'
+  rdoc.main = 'README.rdoc'
+  rdoc.rdoc_files.include('README.rdoc', 'lib/**/*.rb')
+end
+
+
+
