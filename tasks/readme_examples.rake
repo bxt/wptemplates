@@ -11,9 +11,9 @@ task 'spec/examples_spec.rb' => 'README.md' do
     else
       test << "  it '#{name}' do\n"
       code.lines.each do |l|
-        / *(?<actual>.*?) *#=> *(?<expected>.*)/.match(l) do |m|
+        (/^ *(?<actual>.*?) *# *=> *(?<expected>.*)$/.match(l) do |m|
           test << "    expect(#{m[:actual]}).to eq(#{m[:expected]})\n"
-        end
+        end) || /^\s+(#.*)?$/.match(l) || puts("\033[31mLinie not well formed: \033[0m", l)
       end
       test << "  end\n"
     end
