@@ -22,7 +22,10 @@ module Wptemplates
     end
     
     def till_doubleclosebrace_or_pipe
-      /([^|}]|}(?!}))+/
+      /(
+         [^|}]    # Unproblematic chars
+      |  } (?!} ) # A lone close brace
+      )+/x
     end
     
     def from_pipe_till_equals_no_doubleclosebrace_or_pipe
