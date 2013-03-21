@@ -1,6 +1,6 @@
 
-require 'wirble'
-%w{init colorize}.each { |str| Wirble.send(str) }
+#require 'wirble'
+#%w{init colorize}.each { |str| Wirble.send(str) }
 
 require 'irb/completion'
 
