@@ -19,7 +19,7 @@ module Wptemplates
     def all_templates_of type
       all_templates.select{|t| t.name==type}
     end
-    def template_of type
+    def deep_template_of type
       all_templates_of(type).first
     end
     def links
