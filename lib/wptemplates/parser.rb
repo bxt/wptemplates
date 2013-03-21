@@ -91,7 +91,7 @@ module Wptemplates
       if url["#"]
         nil
       elsif m = has_parens.match(url)
-        link_new_with_normalize(m[:no_parens], url, nil)
+        link_new_with_normalize(m[:no_parens]+letters, url, nil)
       else
         label = fixpoint(clone: true, start: url) do |u|
           u[last_comma,:before][parens, :before]
