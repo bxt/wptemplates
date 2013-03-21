@@ -310,6 +310,13 @@ describe Wptemplates::Regexes do
       expect(s[2]).to eq("b|c")
       expect(s[3]).to eq("d")
     end
+    it 'consumes single brackets in the label' do
+      s = scanner_after("[[a|b]c]]d,x")
+      expect(s.matched).to eq("[[a|b]c]]d")
+      expect(s[1]).to eq("a")
+      expect(s[2]).to eq("b]c")
+      expect(s[3]).to eq("d")
+    end
   end
   
 end
