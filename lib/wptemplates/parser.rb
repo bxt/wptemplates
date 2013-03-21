@@ -92,7 +92,7 @@ module Wptemplates
       elsif m = has_parens.match(url)
         link_new_with_normalize(m[:no_parens], url, nil)
       else
-        label = fixpoint(clone: true, start: url.clone) do |u|
+        label = fixpoint(clone: true, start: url) do |u|
           u[last_comma,:before][parens, :before]
         end
         link_new_with_normalize("#{label}#{letters}", url, nil)
