@@ -31,6 +31,8 @@ module Wptemplates
     end
     
     def a_link
+      /\[\[(?<link>[%!"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\u0080-\uFFFF+]+(?:#[#%!"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\u0080-\uFFFF+]+)?)(\|(?<link-description>([^]]|\](?!\]))+))?\]\](?<extra_letters>\p{L}+)?/
     end
+    
   end
 end
