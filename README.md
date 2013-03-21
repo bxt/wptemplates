@@ -64,6 +64,8 @@ Also, there is a page with [link's BNF][lnbnf].
 
 * If you have images in your templates the pipes cause a new parameter
 * Namespaced links are not recognized
+* Templates in links are not recognized
+* Links contents are not htmldecoded
 * html-comments, nowiki, pre and math blocks might cause problems
 
 ## Contributing
