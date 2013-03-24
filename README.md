@@ -14,13 +14,15 @@ Currently only templates and links are parsed, all other markup is ignored.
 
 Add this line to your application's Gemfile:
 
-    gem 'wptemplates', git: 'git://github.com/bxt/wptemplates.git'
+    gem 'wptemplates'
 
 And then execute:
 
     $ bundle
 
-The gem is currently not in the rubygems.org repository. 
+Or install it yourself as:
+
+    $ gem install wptemplates
 
 ## Usage
 
