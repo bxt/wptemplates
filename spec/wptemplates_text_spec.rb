@@ -57,8 +57,8 @@ describe Wptemplates do
   it "removes html comments which remove links opening tag" do
     parsed = subject.parse("<!-- [[a| -->]]")
     expect(parsed.length).to eq(1)
-    expect(parsed.text).to eq("[[a|")
-    expect(parsed[0].text).to eq("[[a|")
+    expect(parsed.text).to eq("]]")
+    expect(parsed[0].text).to eq("]]")
     expect(parsed.templates).to eq([])
     expect(parsed.links).to eq([])
   end
