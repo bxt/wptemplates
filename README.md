@@ -1,5 +1,7 @@
 # Wptemplates
 
+[![Build Status](https://travis-ci.org/bxt/wptemplates.png?branch=master)](https://travis-ci.org/bxt/wptemplates)
+
 Gem for collecting template informations from mediawiki markup. 
 
 It will help you to extract useful machine-readable data from
