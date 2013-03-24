@@ -219,4 +219,13 @@ describe Wptemplates do
     expect(parsed[0].link).to eq("A")
   end
   
+  it "removes html comments between a links tags" do
+    parsed = subject.parse("[[a|<!-- ]] -->b<!-- [[a| -->]]")
+    expect(parsed.length).to eq(1)
+    expect(parsed.text).to eq("b")
+    expect(parsed.links.length).to eq(1)
+    expect(parsed[0].text).to eq("b")
+    expect(parsed[0].link).to eq("A")
+  end
+  
 end
