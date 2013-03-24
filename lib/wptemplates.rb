@@ -4,7 +4,10 @@ require "wptemplates/parser"
 module Wptemplates
   
   def self.parse text
-    Parser.new.parse text
+    parser.parse(text)
+  
+  def self.parser
+    @parser ||= Parser.new
   end
   
 end
