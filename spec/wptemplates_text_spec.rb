@@ -36,6 +36,15 @@ describe Wptemplates do
     expect(parsed.links).to eq([])
   end
   
+  it "leaves stuff between two comments" do
+    parsed = subject.parse("a<!--- b -->c<!--- b -->a")
+    expect(parsed.length).to eq(1)
+    expect(parsed.text).to eq("aca")
+    expect(parsed[0].text).to eq("aca")
+    expect(parsed.templates).to eq([])
+    expect(parsed.links).to eq([])
+  end
+  
   it "removes html comments with invalid combinations of <!-> in between" do
     parsed = subject.parse("d1<!-- d2 -><!-- d3 -- >d4<! -- > d6-->d6")
     expect(parsed.length).to eq(1)
