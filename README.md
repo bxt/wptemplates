@@ -75,7 +75,7 @@ Also, there is a page with [link's BNF][lnbnf].
 * Namespaced links are not recognized
 * Templates in links are not recognized
 * Links contents are not htmldecoded
-* html-comments, nowiki, pre and math blocks might cause problems
+* nowiki, pre and math blocks might cause problems
 
 ## Contributing
 
