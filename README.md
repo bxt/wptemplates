@@ -54,6 +54,13 @@ You can access the links via:
 
 ## Developing
 
+Here's some useful info if you want to improve/customize this gem. 
+
+### Getting Started
+
+Checkout the project, run `bundle` and then `rake` to see if the tests
+pass. Run `rake -T` to see the rake tasks. 
+
 ### Markup
 
 MediaWiki markup is not trivial to parse and there might always
