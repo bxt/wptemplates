@@ -1,6 +1,7 @@
 # Wptemplates
 
 [![Build Status](https://travis-ci.org/bxt/wptemplates.png?branch=master)](https://travis-ci.org/bxt/wptemplates)
+[![Gem Version](https://badge.fury.io/rb/wptemplates.png)](http://badge.fury.io/rb/wptemplates)
 
 Gem for collecting template informations from mediawiki markup. 
 
