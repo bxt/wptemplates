@@ -1,6 +1,7 @@
 = Wptemplates
 
 {<img src="https://travis-ci.org/bxt/wptemplates.png?branch=master" alt="Build Status" />}[https://travis-ci.org/bxt/wptemplates]
+{<img src="https://badge.fury.io/rb/wptemplates.png" alt="Gem Version" />}[http://badge.fury.io/rb/wptemplates]
 
 The public entry method for this gem is Wptemplates.parse
 It will give you Wptemplates::Soup, Wptemplates::Link, 
