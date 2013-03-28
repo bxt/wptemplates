@@ -41,10 +41,17 @@ You can explore the AST with these methods:
 <!-- EXAMPLES:intro -->
     ast.templates.is_a?(Array) && ast.templates.length # => 1
     ast.text # => " baz bamy"
+<!-- /EXAMPLES -->
+
+To find template data:
+
+<!-- EXAMPLES:templates -->
     ast[0].name # => :foo
     ast[0].params[0].text # => " bar "
     ast[0].params[:x].text # => "3"
     ast.all_templates_of(:foo).map{|t| t.params[:x].text} # => ["3"]
+    ast.navigate(:foo, :x) {|p|p.text} # => "3"
+    ast.navigate(:foo, :y) {|p|p.text} # => nil
 <!-- /EXAMPLES -->
 
 You can access the links via: 
