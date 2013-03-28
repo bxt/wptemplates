@@ -32,18 +32,10 @@ module Wptemplates
       node = to.each_slice(2).inject(self) do |node, (type, param)|
         if node
           tmpl = node.template_of(type)
-          if param
-            tmpl && tmpl.params[param]
-          else
-            tmpl
-          end
+          param ? tmpl && tmpl.params[param] : tmpl
         end
       end
-      if block_given? && node
-        yield node
-      else
-        node
-      end
+      block_given? && node ? yield(node) : node
     end
   end
   
