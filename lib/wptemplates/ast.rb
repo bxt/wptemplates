@@ -28,6 +28,24 @@ module Wptemplates
     def all_links
       links
     end
+    def navigate(*to)
+      node = self
+      to.each_slice(2) do |type, param|
+        if node
+          tmpl = node.template_of(type)
+          if param
+            node = tmpl && tmpl.params[param]
+          else
+            node = tmpl
+          end
+        end
+      end
+      if block_given? && node
+        yield node
+      else
+        node
+      end
+    end
   end
   
   class Soup < Array

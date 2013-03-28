@@ -158,4 +158,17 @@ describe Wptemplates do
     expect(parsed.all_templates_of :bar).to eq([parsed.templates[0].params[:a].templates[0]])
   end
   
+  it "optionally navigates to nested templates' parameter texts" do
+    parsed = subject.parse("{{foo| a = {{bar|j|k}} |b = y {{foo|p=q}} y2 \n|c= z z }}")
+    #expect(parsed.navigate(:foo)).to eq(parsed.templates(:foo))
+    expect(parsed.navigate(:foo, :a, :bar, 0) {|p| p.text}).to eq("j")
+    expect(parsed.navigate(:foo, :a, :bar, 1) {|p| p.text}).to eq("k")
+    expect(parsed.navigate(:foo, :a, :bar, 2) {|p| p.text}).to be_nil
+    expect(parsed.navigate(:foo, :a, :bar) {|t| t.params.keys}).to eq([0,1])
+    expect(parsed.navigate(:foo, :a, :baz) {|t| t.params}).to be_nil
+    expect(parsed.navigate(:foo, :a, :baz, 2) {|p| p.text}).to be_nil
+    expect(parsed.navigate(:foo, :b, :foo, :p) {|p| p.text}).to eq("q")
+    expect(parsed.navigate(:foo, :b, :foo, :r) {|p| p.text}).to be_nil
+  end
+  
 end
