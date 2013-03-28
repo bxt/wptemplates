@@ -29,14 +29,13 @@ module Wptemplates
       links
     end
     def navigate(*to)
-      node = self
-      to.each_slice(2) do |type, param|
+      node = to.each_slice(2).inject(self) do |node, (type, param)|
         if node
           tmpl = node.template_of(type)
           if param
-            node = tmpl && tmpl.params[param]
+            tmpl && tmpl.params[param]
           else
-            node = tmpl
+            tmpl
           end
         end
       end
