@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Wptemplates do
-  
+
   it "parses a template without any parameters" do
     parsed = subject.parse("{{foo}}")
     expect(parsed.length).to eq(1)
@@ -10,7 +10,7 @@ describe Wptemplates do
     expect(parsed.templates.length).to eq(1)
     expect(parsed[0].name).to eq(:foo)
   end
-  
+
   it "parses a template with numeric parameters" do
     parsed = subject.parse("{{foo|a|b|c}}")
     expect(parsed.length).to eq(1)
@@ -30,7 +30,7 @@ describe Wptemplates do
     expect(p[2].text).to eq("c")
     expect(p[2][0].text).to eq("c")
   end
-  
+
   it "parses a template with named parameters" do
     parsed = subject.parse("{{foo| a = x |b = y \n|c= z z }}")
     expect(parsed.length).to eq(1)
@@ -50,7 +50,7 @@ describe Wptemplates do
     expect(p[:c].text).to eq("z z")
     expect(p[:c][0].text).to eq("z z")
   end
-  
+
   it "doesn't have problems with empty numeric parameters" do
     parsed = subject.parse("{{foo|}}")
     expect(parsed.length).to eq(1)
@@ -60,7 +60,7 @@ describe Wptemplates do
     expect(p[0].text).to eq("")
     expect(p[0][0].text).to eq("")
   end
-  
+
   it "doesn't have problems with empty valued named parameters" do
     parsed = subject.parse("{{foo|b=}}")
     expect(parsed.length).to eq(1)
@@ -70,7 +70,7 @@ describe Wptemplates do
     expect(p[:b].text).to eq("")
     expect(p[:b][0].text).to eq("")
   end
-  
+
   it "doesn't have problems with white spece only valued named parameters" do
     parsed = subject.parse("{{foo|c= }}")
     expect(parsed.length).to eq(1)
@@ -80,7 +80,7 @@ describe Wptemplates do
     expect(p[:c].text).to eq("")
     expect(p[:c][0].text).to eq("")
   end
-  
+
   it "doesn't have problems with empty name parameters" do
     parsed = subject.parse("{{foo|=3}}")
     p = parsed[0].params
@@ -88,7 +88,7 @@ describe Wptemplates do
     expect(p[:""].text).to eq("3")
     expect(p[:""][0].text).to eq("3")
   end
-  
+
   it "doesn't have problems with mixed empty stuff" do
     parsed = subject.parse("{{foo||b=|c= |=3}}")
     expect(parsed.length).to eq(1)
@@ -107,7 +107,7 @@ describe Wptemplates do
     expect(p[:""].text).to eq("3")
     expect(p[:""][0].text).to eq("3")
   end
-  
+
   it "parses nested templates" do
     parsed = subject.parse("{{foo| a = {{bar|j|k}} |b = y {{baz|p=q}} y2 \n|c= z z }}")
     expect(parsed.length).to eq(1)
@@ -136,16 +136,16 @@ describe Wptemplates do
     expect(p[:c].text).to eq("z z")
     expect(p[:c][0].text).to eq("z z")
   end
-  
+
   it "barkes about unclosed templates" do
-    expect { subject.parse("{{foo") }.to raise_error
-    expect { subject.parse("{{foo}}{{") }.to raise_error
+    expect { subject.parse("{{foo") }.to raise_error(RuntimeError, "unclosed template")
+    expect { subject.parse("{{foo}}{{") }.to raise_error(RuntimeError, "unclosed template")
   end
-  
+
   it "does not bark when {{ is in the name though" do
     expect(subject.parse("{{{{foo}}")[0].name).to eq(:"{{foo")
   end
-  
+
   it "finds nested templates" do
     parsed = subject.parse("{{foo| a = {{bar|j|k}} |b = y {{foo|p=q}} y2 \n|c= z z }}")
     expect(parsed.template_of :foo).to eq(parsed.templates[0])
@@ -157,7 +157,7 @@ describe Wptemplates do
     expect(parsed.deep_template_of :bar).to eq(parsed.templates[0].params[:a].templates[0])
     expect(parsed.all_templates_of :bar).to eq([parsed.templates[0].params[:a].templates[0]])
   end
-  
+
   it "optionally navigates to nested templates' parameter texts" do
     parsed = subject.parse("{{foo| a = {{bar|j|k}} |b = y {{foo|p=q}} y2 \n|c= z z }}")
     expect(parsed.navigate(:foo)).to eq(parsed.template_of(:foo))
@@ -173,5 +173,5 @@ describe Wptemplates do
     expect(parsed.navigate(:foo, :b, :foo, :p) {|p| p.text}).to eq("q")
     expect(parsed.navigate(:foo, :b, :foo, :r) {|p| p.text}).to be_nil
   end
-  
+
 end
