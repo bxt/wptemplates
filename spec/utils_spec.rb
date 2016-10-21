@@ -1,16 +1,14 @@
 require 'spec_helper'
 
 describe Wptemplates::Utils do
-  
+
   describe '.normalize_link' do
     context 'when anchor is false' do
       it 'removes spare spaces and underscores ' do
         expect(subject.normalize_link(" Jimbo_ __ Wales__")).to eq("Jimbo Wales")
       end
-      it 'removes spare spaces and underscores around namespace nekudotayim' do
-        pending "not sure if to implement here" do
-          expect(subject.normalize_link("_User_: Jimbo_ __ Wales__")).to eq("User:Jimbo Wales")
-        end
+      it 'removes spare spaces and underscores around namespace nekudotayim', pending: "Not yet implemented." do
+        expect(subject.normalize_link("_User_: Jimbo_ __ Wales__")).to eq("User:Jimbo Wales")
       end
       it 'capitalizes the first letter' do
         expect(subject.normalize_link("foo")).to eq("Foo")
@@ -18,10 +16,8 @@ describe Wptemplates::Utils do
       it 'preserves case of the other letters' do
         expect(subject.normalize_link("fOo")).to eq("FOo")
       end
-      it 'normalizes case of namespace prefix' do
-        pending "not sure if to implement here" do
-          expect(subject.normalize_link("fOoO:Bar")).to eq("Fooo:Bar")
-        end
+      it 'normalizes case of namespace prefix', pending: "Not yet implemented." do
+        expect(subject.normalize_link("fOoO:Bar")).to eq("Fooo:Bar")
       end
     end
     context 'when anchor is true' do
@@ -33,7 +29,7 @@ describe Wptemplates::Utils do
       end
     end
   end
-  
+
   describe '.normalize_linklabel' do
     it 'removes spare spaces but not underscores' do
       expect(subject.normalize_linklabel(" Jimbo_  __ Wales__")).to eq("Jimbo_ __ Wales__")
@@ -42,7 +38,7 @@ describe Wptemplates::Utils do
       expect(subject.normalize_linklabel("dJango")).to eq("dJango")
     end
   end
-  
+
   describe '.symbolize' do
     it "symbolizes strings" do
       expect(subject.symbolize(" foo ")).to eq(:foo)
@@ -57,7 +53,7 @@ describe Wptemplates::Utils do
       expect(subject.symbolize("fooBar")).to eq(:foobar)
     end
   end
-  
+
   describe '.fixpoint' do
     it 'returns nil when immideatly given nil' do
       expect(subject.fixpoint {nil}).to be_nil
